@@ -19,7 +19,10 @@ typedef struct Joueur
 //int idJ=0;
 int Ajouterjoueur(joueur joueurs[],int counter)
 {
-    static int idJ = 0;
+    //static int idJoueur;
+    //idJoueur=joueurs[counter].id;
+
+    static int idJoueur = 0;
     printf("entrer le nom du joueur : ");
     fgets(joueurs[counter].nom,sizeof(joueurs[counter].nom),stdin);
     printf("entrer le prenom du joueur : ");
@@ -39,21 +42,31 @@ int Ajouterjoueur(joueur joueurs[],int counter)
     getchar();
 
 
-    joueurs[counter].id = ++idJ;
+    //joueurs[counter].id = ++idJoueur;
+    //counter ++;
+    //return counter;
+
+    joueurs[counter].id = ++idJoueur;
     return (counter+1);
 }
-void AffichierJoueur(joueur joueurs[],int counter){
-    for(int i=0;i<counter;i++){
-        printf("ID : %d - la nom du joueur : %s - le prenom : %s - numeroMaillot : %d - poste :%s - age : %d - le nombre de buts : %d\n",joueurs[i].id,joueurs[i].nom,joueurs[i].prenom,joueurs[i].numeroMaillot,joueurs[i].poste,joueurs[i].age,joueurs[i].buts);
+void AffichierJoueur(joueur joueurs[],int counter)
+{
+    for(int i=0; i<counter; i++)
+    {
+        printf("counter : %d - ID : %d - la nom du joueur : %s - le prenom : %s - numeroMaillot : %d - poste :%s - age : %d - le nombre de buts : %d\n",counter,joueurs[i].id,joueurs[i].nom,joueurs[i].prenom,joueurs[i].numeroMaillot,joueurs[i].poste,joueurs[i].age,joueurs[i].buts);
     }
 }
-void TrierJoueurParNom(joueur joueurs[],int counter){
+void TrierJoueurParNom(joueur joueurs[],int counter)
+{
     //int index_i=0;
     joueur temp;
 
-    for(int i=0;i<counter;i++){
-        for(int j=i+1;j<counter;j++){
-            if(strcmp(joueurs[i].nom,joueurs[j].nom)>0){
+    for(int i=0; i<counter; i++)
+    {
+        for(int j=i+1; j<counter; j++)
+        {
+            if(strcasecmp(joueurs[i].nom,joueurs[j].nom)>0)
+            {
                 //index_i=j
                 temp=joueurs[i];
                 joueurs[i]=joueurs[j];
@@ -61,10 +74,46 @@ void TrierJoueurParNom(joueur joueurs[],int counter){
             }
         }
     }
-
+    printf("voici les joueur trier par nom : \n");
+    AffichierJoueur(joueurs,counter);
 }
+void TrierJoueurParAge(joueur joueurs[],int count)
+{
+    joueur temp;
+    for(int i=0; i<count; i++)
+    {
+        for(int j=i+1; j<count; j++)
+        {
+            if(joueurs[i].age>joueurs[j].age)
+            {
+                temp=joueurs[i];
+                joueurs[i]=joueurs[j];
+                joueurs[j]=temp;
+            }
+        }
+    }
+    printf("voici les joueur trier par age : \n");
+    AffichierJoueur(joueurs,count);
+}
+/*void TrierJoueurParPoste(joueur joueurs[],count)
+{
+    for
+}*/
 int main()
 {
+    /*joueur joueurs []=
+    {
+        {1, "zidane", "Zinedine", 10, "Milieu", 38, 125, "2000-06-15", "Actif"},
+        {2, "Ronaldo", "Cristiano", 7, "Attaquant", 36, 750, "2003-08-12", "Actif"},
+        {3, "messi", "Lionel", 30, "Attaquant", 34, 700, "2004-07-05", "Actif"},
+        {4, "Neymar", "Junior", 11, "Attaquant", 29, 350, "2010-05-20", "Actif"},
+        {5, "Mbappe", "Kylian", 7, "Attaquant", 22, 150, "2017-11-01", "Actif"}
+    };
+    int choix;
+    int counter=sizeof(joueurs)/sizeof(joueur);
+    */
+
+
     joueur joueurs [10];
     int choix;
     int counter=0;
@@ -130,9 +179,9 @@ int main()
             {
                 int choixAffiche;
                 printf("------------Menu D'affichage------------ \n");
-                printf("1 Trier les joueurs par ordre alphabétique (Nom).\n");
-                printf("2 Trier les joueurs par âge.\n");
-                printf("3 Afficher les joueurs par poste.\n");
+                printf("1 - Trier les joueurs par ordre alphabetique (Nom).\n");
+                printf("2 - Trier les joueurs par age.\n");
+                printf("3 - Afficher les joueurs par poste.\n");
                 scanf("%d",&choixAffiche);
                 getchar();
 
@@ -140,12 +189,12 @@ int main()
                 {
                 case 1:
                     TrierJoueurParNom(joueurs,counter);
-                    AffichierJoueur(joueurs,counter);
                     break;
                 case 2:
-                    //TrierJoueurParAge();
+                    TrierJoueurParAge(joueurs,counter);
                     break;
                 case 3:
+                    //TrierJoueurParPoste
                     //TrierJoueurParPoste();
                     break;
                 default:
