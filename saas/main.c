@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #define MAX_SIZE 100
+
 typedef struct Joueur
 {
     int id;
@@ -37,10 +39,28 @@ int Ajouterjoueur(joueur joueurs[],int counter)
     getchar();
 
 
-    joueurs[counter].id=++idJ;
+    joueurs[counter].id = ++idJ;
     return (counter+1);
 }
+void AffichierJoueur(joueur joueurs[],int counter){
+    for(int i=0;i<counter;i++){
+        printf("ID : %d - la nom du joueur : %s - le prenom : %s - numeroMaillot : %d - poste :%s - age : %d - le nombre de buts : %d\n",joueurs[i].id,joueurs[i].nom,joueurs[i].prenom,joueurs[i].numeroMaillot,joueurs[i].poste,joueurs[i].age,joueurs[i].buts);
+    }
+}
 void TrierJoueurParNom(joueur joueurs[],int counter){
+    //int index_i=0;
+    joueur temp;
+
+    for(int i=0;i<counter;i++){
+        for(int j=i+1;j<counter;j++){
+            if(strcmp(joueurs[i].nom,joueurs[j].nom)>0){
+                //index_i=j
+                temp=joueurs[i];
+                joueurs[i]=joueurs[j];
+                joueurs[j]=temp;
+            }
+        }
+    }
 
 }
 int main()
@@ -90,7 +110,7 @@ int main()
                     for(int i=0; i<nombreJoueurs; i++)
                     {
                         printf("entrer le joueur N°%d :\n",i+1);
-                        counter=Ajouterjoueur(joueurs,counter);
+                        counter=Ajouterjoueur(joueurs,counter);//pour modifier la valeur de lindex apres l'ajout (incrementation)
                     }
                     printf("%d",counter);
 
@@ -110,9 +130,9 @@ int main()
             {
                 int choixAffiche;
                 printf("------------Menu D'affichage------------ \n");
-                printf("1 Trier les joueurs par ordre alphabétique (Nom).");
-                printf("2 Trier les joueurs par âge.");
-                printf("3 Afficher les joueurs par poste.");
+                printf("1 Trier les joueurs par ordre alphabétique (Nom).\n");
+                printf("2 Trier les joueurs par âge.\n");
+                printf("3 Afficher les joueurs par poste.\n");
                 scanf("%d",&choixAffiche);
                 getchar();
 
@@ -120,6 +140,7 @@ int main()
                 {
                 case 1:
                     TrierJoueurParNom(joueurs,counter);
+                    AffichierJoueur(joueurs,counter);
                     break;
                 case 2:
                     //TrierJoueurParAge();
@@ -165,6 +186,6 @@ int main()
         scanf("%c",&choixContinuer);
         getchar();
     }
-    while(choixContinuer != 'n');
+    while(choixContinuer == 'y');
     return 0;
 }
