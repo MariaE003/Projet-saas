@@ -21,8 +21,6 @@ int Ajouterjoueur(joueur joueurs[],int counter)
 {
     static int idJoueur=10;
 
-    //static int idJoueur = 0;
-
     printf("entrer le nom du joueur : ");
     fgets(joueurs[counter].nom,sizeof(joueurs[counter].nom),stdin);
     joueurs[counter].nom[strcspn(joueurs[counter].nom, "\n")] = '\0';//supprimer le retour a la ligne
@@ -47,8 +45,33 @@ int Ajouterjoueur(joueur joueurs[],int counter)
     printf("entrer le nombre de buts marques par le joueur. : ");
     scanf("%d",&joueurs[counter].buts);
     getchar();
+    //le status
+    int choixStatus;
+    do
+    {
+
+        printf("entrer le statut dun joueur : \n");
+        printf("1 - titulaire\n");
+        printf("2 - remplaçant\n");
+        scanf("%d",&choixStatus);
+        getchar();
+
+        switch(choixStatus)
+        {
+        case 1:
+            strcpy(joueurs[counter].statut,"titulaire");
+            break;
+        case 2:
+            strcpy(joueurs[counter].statut,"remplaçant");
+            break;
+        default:
+            printf("entrer un choix valide.\n");
+        }
+    }
+    while(choixStatus != 1 && choixStatus !=2);
 
     joueurs[counter].id = ++idJoueur;
+
     //counter ++;
     //return counter;
 
@@ -60,8 +83,15 @@ void AffichierJoueur(joueur joueurs[],int counter)
 {
     for(int i=0; i<counter; i++)
     {
-        printf("ID : %d - la nom du joueur : %s - le prenom : %s - numeroMaillot : %d - poste :%s - age : %d - le nombre de buts : %d\n",joueurs[i].id,joueurs[i].nom,joueurs[i].prenom,joueurs[i].numeroMaillot,joueurs[i].poste,joueurs[i].age,joueurs[i].buts);
+        printf("Id : %d - la nom du joueur : %s - le prenom : %s - numeroMaillot : %d - poste :%s - age : %d - le nombre de buts : %d - le status : %s\n",joueurs[i].id,joueurs[i].nom,joueurs[i].prenom,joueurs[i].numeroMaillot,joueurs[i].poste,joueurs[i].age,joueurs[i].buts,joueurs[i].statut);
         //printf("%d",counter);
+        if(joueurs[i].buts>20)
+        {
+            printf("---------------- félicitation ----------------\n");
+            printf("Bravo %s %s \n",joueurs[i].prenom,joueurs[i].nom);
+            printf("avec %d des buts, tues une star de l'equipe !\n",joueurs[i].buts);
+            printf("----------------               ----------------\n");
+        }
     }
 }
 void TrierJoueurParNom(joueur joueurs[],int counter)
@@ -299,17 +329,21 @@ void AfficherMeilleurButeur(joueur joueurs[],int count)
 
 
 }
-void AfficherPlusJeunePlusAge(joueur joueurs[],int count){
+void AfficherPlusJeunePlusAge(joueur joueurs[],int count)
+{
     int MaxPlusAge=joueurs[0].age;
     int indicePlusAge=0;
     int indicePlusJeune=0;
     int MinPlusJeune=joueurs[0].age;
-    for(int i=0;i<count;i++){
-        if(MaxPlusAge<joueurs[i].age){
+    for(int i=0; i<count; i++)
+    {
+        if(MaxPlusAge<joueurs[i].age)
+        {
             MaxPlusAge=joueurs[i].age;
             indicePlusAge=i;
         }
-        if(MinPlusJeune>joueurs[i].age){
+        if(MinPlusJeune>joueurs[i].age)
+        {
             MinPlusJeune=joueurs[i].age;
             indicePlusJeune=i;
         }
@@ -341,8 +375,6 @@ int main()
     };
     int choix;
     int counter=10;
-
-
 
     //joueur joueurs [30];
     //int choix;
@@ -559,8 +591,6 @@ int main()
 
                 }
 
-
-
                 //le choix de continuer
                 printf("vous voulez continuer ? y/n : ");
                 scanf("%c",&choixContinuer);
@@ -572,7 +602,6 @@ int main()
             printf("entrer un choix valide");
             break;
         }
-
 
         //le choix de continuer
         printf("vous voulez continuer ? y/n : ");
