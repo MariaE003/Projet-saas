@@ -16,17 +16,21 @@ typedef struct Joueur
     char statut [MAX_SIZE];
 } joueur;
 
-//int idJ=0;
+
 int Ajouterjoueur(joueur joueurs[],int counter)
 {
-    //static int idJoueur;
-    //idJoueur=joueurs[counter].id;
+    static int idJoueur=10;
 
-    static int idJoueur = 0;
+    //static int idJoueur = 0;
+
     printf("entrer le nom du joueur : ");
     fgets(joueurs[counter].nom,sizeof(joueurs[counter].nom),stdin);
+    joueurs[counter].nom[strcspn(joueurs[counter].nom, "\n")] = '\0';//supprimer le retour a la ligne
+
     printf("entrer le prenom du joueur : ");
     fgets(joueurs[counter].prenom,sizeof(joueurs[counter].prenom),stdin);
+    joueurs[counter].prenom[strcspn(joueurs[counter].prenom, "\n")] = '\0';//supprimer le retour a la ligne
+
 
     printf("entrer le numeroMaillot du joueur : ");
     scanf("%d",&joueurs[counter].numeroMaillot);
@@ -34,26 +38,30 @@ int Ajouterjoueur(joueur joueurs[],int counter)
 
     printf("entrer le poste  du joueur : ");
     fgets(joueurs[counter].poste,sizeof(joueurs[counter].poste),stdin);
+    joueurs[counter].poste[strcspn(joueurs[counter].poste, "\n")] = '\0';//supprimer le retour a la ligne
+
     printf("entrer l'age  du joueur : ");
     scanf("%d",&joueurs[counter].age);
     getchar();
+
     printf("entrer le nombre de buts marques par le joueur. : ");
     scanf("%d",&joueurs[counter].buts);
     getchar();
 
-
-    //joueurs[counter].id = ++idJoueur;
+    joueurs[counter].id = ++idJoueur;
     //counter ++;
     //return counter;
 
-    joueurs[counter].id = ++idJoueur;
+    //joueurs[counter].id = ++idJoueur;
+
     return (counter+1);
 }
 void AffichierJoueur(joueur joueurs[],int counter)
 {
     for(int i=0; i<counter; i++)
     {
-        printf("counter : %d - ID : %d - la nom du joueur : %s - le prenom : %s - numeroMaillot : %d - poste :%s - age : %d - le nombre de buts : %d\n",counter,joueurs[i].id,joueurs[i].nom,joueurs[i].prenom,joueurs[i].numeroMaillot,joueurs[i].poste,joueurs[i].age,joueurs[i].buts);
+        printf("ID : %d - la nom du joueur : %s - le prenom : %s - numeroMaillot : %d - poste :%s - age : %d - le nombre de buts : %d\n",joueurs[i].id,joueurs[i].nom,joueurs[i].prenom,joueurs[i].numeroMaillot,joueurs[i].poste,joueurs[i].age,joueurs[i].buts);
+        //printf("%d",counter);
     }
 }
 void TrierJoueurParNom(joueur joueurs[],int counter)
@@ -95,28 +103,142 @@ void TrierJoueurParAge(joueur joueurs[],int count)
     printf("voici les joueur trier par age : \n");
     AffichierJoueur(joueurs,count);
 }
-/*void TrierJoueurParPoste(joueur joueurs[],count)
+void TrierJoueurParPoste(joueur joueurs[],int counter)
 {
-    for
-}*/
+    printf("les gardien sont : \n");
+
+    for(int i=0; i<counter; i++)
+    {
+        if(strcasecmp(joueurs[i].poste,"gardien")==0)
+        {
+            printf("ID : %d - la nom du joueur : %s - le prenom : %s - numeroMaillot : %d - poste :%s - age : %d - le nombre de buts : %d\n",joueurs[i].id,joueurs[i].nom,joueurs[i].prenom,joueurs[i].numeroMaillot,joueurs[i].poste,joueurs[i].age,joueurs[i].buts);
+        }
+    }
+
+    printf("les defenseur sont : \n");
+    for(int i=0; i<counter; i++)
+    {
+        if(strcasecmp(joueurs[i].poste,"defenseur")==0)
+        {
+            printf("ID : %d - la nom du joueur : %s - le prenom : %s - numeroMaillot : %d - poste :%s - age : %d - le nombre de buts : %d\n",joueurs[i].id,joueurs[i].nom,joueurs[i].prenom,joueurs[i].numeroMaillot,joueurs[i].poste,joueurs[i].age,joueurs[i].buts);
+        }
+    }
+    printf("les milieu sont : \n");
+    for(int i=0; i<counter; i++)
+    {
+        if(strcasecmp(joueurs[i].poste,"milieu")==0)
+        {
+            printf("ID : %d - la nom du joueur : %s - le prenom : %s - numeroMaillot : %d - poste :%s - age : %d - le nombre de buts : %d\n",joueurs[i].id,joueurs[i].nom,joueurs[i].prenom,joueurs[i].numeroMaillot,joueurs[i].poste,joueurs[i].age,joueurs[i].buts);
+        }
+    }
+    printf("les attaquant sont : \n");
+    for(int i=0; i<counter; i++)
+    {
+        if(strcasecmp(joueurs[i].poste,"attaquant")==0)
+        {
+            printf("ID : %d - la nom du joueur : %s - le prenom : %s - numeroMaillot : %d - poste :%s - age : %d - le nombre de buts : %d\n",joueurs[i].id,joueurs[i].nom,joueurs[i].prenom,joueurs[i].numeroMaillot,joueurs[i].poste,joueurs[i].age,joueurs[i].buts);
+        }
+    }
+}
+
+int rechercheJoueurParId(joueur joueurs[],int counter,int id)
+{
+    for(int i=0; i<counter; i++)
+    {
+        if(joueurs[i].id==id)
+        {
+            return i;
+            break;
+        }
+    }
+    return -1;
+}
+int rechercheJoueurParNom(joueur joueurs[],int counter,char Nom[MAX_SIZE])
+{
+    for(int i=0; i<counter; i++)
+    {
+        if(strcasecmp(joueurs[i].nom,Nom)==0)
+        {
+            return i;
+            break;
+        }
+    }
+    return -1;
+}
+void AfficherRecherche(joueur joueurs[],int indice)
+{
+
+    printf("ID : %d - la nom du joueur : %s - le prenom : %s - numeroMaillot : %d - poste :%s - age : %d - le nombre de buts : %d\n",joueurs[indice].id,joueurs[indice].nom,joueurs[indice].prenom,joueurs[indice].numeroMaillot,joueurs[indice].poste,
+           joueurs[indice].age,joueurs[indice].buts);
+
+}
+void ModifierPoste(int idJoueurModified,joueur joueurs[],int counter){
+    int indice_joueur=rechercheJoueurParId(joueurs,counter,idJoueurModified);
+    char nouvelPost [MAX_SIZE];
+    if(indice_joueur!=-1){
+        printf("entrer le nouvelle post pour se joueur :\n");
+        fgets(nouvelPost,sizeof(nouvelPost),stdin);
+        nouvelPost[strcspn(nouvelPost, "\n")] = '\0';
+
+        strcpy(joueurs[indice_joueur].poste,nouvelPost);
+        printf("le  post modifier avce succes \n");
+    }else{
+        printf("le joueur n'exist pas.");
+    }
+}
+void ModifierAge(int idJoueurModified,joueur joueurs[],int counter){
+    int indice_joueur=rechercheJoueurParId(joueurs,counter,idJoueurModified);
+    int nouvelAge;
+    if(indice_joueur!=-1){
+        printf("entrer le nouvelle Age pour se joueur :\n");
+        scanf("%d",&nouvelAge);
+        getchar();
+
+        joueurs[indice_joueur].age=nouvelAge;
+        printf("l'age modifier avce succes \n");
+    }else{
+        printf("le joueur n'exist pas.");
+    }
+}
+
+void ModifierNombreButs(int idJoueurModified,joueur joueurs[],int counter){
+    int indice_joueur=rechercheJoueurParId(joueurs,counter,idJoueurModified);
+    int nouvelNembreBut;
+    if(indice_joueur!=-1){
+        printf("entrer le nouvelle nombre de buts pour se joueur :\n");
+        scanf("%d",&nouvelNembreBut);
+        getchar();
+
+        joueurs[indice_joueur].buts=nouvelNembreBut;
+        printf("le nombre de buts modifier avce succes \n");
+    }else{
+        printf("le joueur n'exist pas.");
+    }
+}
 int main()
 {
-    /*joueur joueurs []=
+    joueur joueurs [MAX_SIZE]=
     {
-        {1, "zidane", "Zinedine", 10, "Milieu", 38, 125, "2000-06-15", "Actif"},
-        {2, "Ronaldo", "Cristiano", 7, "Attaquant", 36, 750, "2003-08-12", "Actif"},
-        {3, "messi", "Lionel", 30, "Attaquant", 34, 700, "2004-07-05", "Actif"},
-        {4, "Neymar", "Junior", 11, "Attaquant", 29, 350, "2010-05-20", "Actif"},
-        {5, "Mbappe", "Kylian", 7, "Attaquant", 22, 150, "2017-11-01", "Actif"}
+        {1,  "zidane",    "Zinedine", 10, "Milieu",    38, 125, "2000-06-15", "Actif"},
+        {2,  "Ronaldo",   "Cristiano", 7, "Attaquant", 36, 750, "2003-08-12", "Actif"},
+        {3,  "messi",     "Lionel",   30, "Attaquant", 34, 700, "2004-07-05", "Actif"},
+        {4,  "Neymar",    "Junior",   11, "Attaquant", 29, 350, "2010-05-20", "Actif"},
+        {5,  "Mbappe",    "Kylian",    7, "Attaquant", 22, 150, "2017-11-01", "Actif"},
+        {6,  "Hakimi",    "Achraf",    2, "Defenseur", 25,  40, "2018-09-14", "Actif"},
+        {7,  "Kante",     "N'Golo",   13, "Milieu",    32,  30, "2016-07-03", "Actif"},
+        {8,  "Modric",    "Luka",     10, "Milieu",    37,  90, "2008-08-15", "Actif"},
+        {9,  "Benzema",   "Karim",     9, "Attaquant", 35, 450, "2009-07-01", "Retraité"},
+        {10, "TerStegen", "Marc",      1, "Gardien",   31,   0, "2014-06-22", "Actif"},
+
     };
     int choix;
-    int counter=sizeof(joueurs)/sizeof(joueur);
-    */
+    int counter=10;
 
 
-    joueur joueurs [10];
-    int choix;
-    int counter=0;
+
+    //joueur joueurs [30];
+    //int choix;
+    //int counter=0;
 
     char choixContinuer;
     do
@@ -136,7 +258,6 @@ int main()
         switch(choix)
         {
         case 1:
-            //choix
             char choixAjoutJoueur;
             do
             {
@@ -149,7 +270,6 @@ int main()
                 {
                 case 'a':
                     counter=Ajouterjoueur(joueurs,counter);
-                    printf("%d",counter);
                     break;
                 case 'b':
                     int nombreJoueurs;
@@ -161,7 +281,6 @@ int main()
                         printf("entrer le joueur N°%d :\n",i+1);
                         counter=Ajouterjoueur(joueurs,counter);//pour modifier la valeur de lindex apres l'ajout (incrementation)
                     }
-                    printf("%d",counter);
 
                     break;
                 default:
@@ -194,8 +313,7 @@ int main()
                     TrierJoueurParAge(joueurs,counter);
                     break;
                 case 3:
-                    //TrierJoueurParPoste
-                    //TrierJoueurParPoste();
+                    TrierJoueurParPoste(joueurs,counter);
                     break;
                 default:
                     printf("entrer un choix valide.");
@@ -207,20 +325,84 @@ int main()
                 getchar();
             }
             while(choixContinuer=='y');
-
-
-            //printf("voici la liste de tous les joueurs :\n");
-            //for(int i=0; i<counter; i++)
-            //{
-            //  printf("ID : %d - la nom du joueur : %s - le prenom : %s - numeroMaillot : %d - poste :%s - age : %d - le nombre de buts : %d\n",joueurs[i].id,joueurs[i].nom,joueurs[i].prenom,joueurs[i].numeroMaillot,joueurs[i].poste,joueurs[i].age,joueurs[i].buts);
-            //}
-
             break;
         case 3:
+            int choixModifierJoueur;
+
+            do
+            {
+                printf("------------Menu De Modification------------ \n");
+                printf("1 - Modifier le poste dun joueur.\n");
+                printf("2 - Modifier lage dun joueur.\n");
+                printf("3 - Modifier le nombre de buts marqués par un joueur.\n");
+                scanf("%d",&choixModifierJoueur);
+                getchar();
+                int idJoueurModified;
+                printf("entrer le id du joueurs que tu veux modifier :");
+                scanf("%d",&idJoueurModified);
+                getchar();
+
+                switch(choixModifierJoueur)
+                {
+                case 1:
+                    ModifierPoste(idJoueurModified,joueurs,counter);
+                    break;
+                case 2:
+                    ModifierAge(idJoueurModified,joueurs,counter);
+                    break;
+                case 3:
+                    ModifierNombreButs(idJoueurModified,joueurs,counter);
+                    break;
+                }
+                printf("vous voulez continuer dans le menu de modification ? y/n : ");
+                scanf("%c",&choixContinuer);
+                getchar();
+            }
+            while(choixContinuer == 'y');
             break;
         case 4:
             break;
         case 5:
+
+            int choixRecherche;
+            int idJoueur,indice;
+            char NomJoueur [MAX_SIZE];
+            do
+            {
+                printf("------------Menu De Recherche------------ \n");
+                printf("1 - Rechercher un joueur par Identifiant.\n");
+                printf("2 - Rechercher un joueur par Nom.\n");
+                scanf("%d",&choixRecherche);
+                getchar();
+                switch(choixRecherche)
+                {
+                case 1:
+                    printf("entrer id du joueur que tu veux chercher :");
+                    scanf("%d",&idJoueur);
+                    getchar();
+                    indice=rechercheJoueurParId(joueurs,counter,idJoueur);
+                    AfficherRecherche(joueurs,indice);
+                    break;
+                case 2:
+                    printf("entrer le nom du joueur que tu veux chercher :");
+                    fgets(NomJoueur,sizeof(NomJoueur),stdin);
+                    NomJoueur[strcspn(NomJoueur, "\n")]='\0';
+
+                    indice=rechercheJoueurParNom(joueurs,counter,NomJoueur);
+                    AfficherRecherche(joueurs,indice);
+
+                    break;
+                default:
+                    printf("entrer un choix valide.\n");
+                    break;
+                }
+                //le choix de continuer
+                printf("vous voulez continuer ? y/n : ");
+                scanf("%c",&choixContinuer);
+                getchar();
+            }
+            while(choixContinuer == 'y');
+
             break;
         case 6:
             break;
