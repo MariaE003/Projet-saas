@@ -215,6 +215,20 @@ void ModifierNombreButs(int idJoueurModified,joueur joueurs[],int counter){
         printf("le joueur n'exist pas.");
     }
 }
+//la supprission
+int SupprimerJoueur(joueur joueurs[],int counter,int idJoueur){
+    int indice_joueur=rechercheJoueurParId(joueurs,counter,idJoueur);
+    if(indice_joueur!=-1){
+        for(int i=indice_joueur;i<counter;i++){
+            joueurs[i]=joueurs[i+1];
+        }
+        counter--;
+        printf("le nombre et supprimer avce succes \n");
+    }else{
+        printf("le joueur n'exist pas.");
+    }
+    return counter;
+}
 int main()
 {
     joueur joueurs [MAX_SIZE]=
@@ -361,6 +375,18 @@ int main()
             while(choixContinuer == 'y');
             break;
         case 4:
+            do{
+                int idJoueur;
+                printf("entrer id du joueur :");
+                scanf("%d",&idJoueur);
+                getchar();
+
+                counter=SupprimerJoueur(joueurs,counter,idJoueur);
+                printf("vous voulez continuer la supprission ? y/n : ");
+                scanf("%c",&choixContinuer);
+                getchar();
+            }
+            while(choixContinuer == 'y');
             break;
         case 5:
 
