@@ -1,5 +1,8 @@
 # depslib dependency file v1.0
-1757688665 source:c:\users\ycode\projet-saas\saas\main.c
+1757746746 source:c:\users\ycode\projet-saas\saas\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
