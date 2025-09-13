@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include<stdbool.h>
 #define MAX_SIZE 100
 
 typedef struct
@@ -463,9 +464,9 @@ int main()
     int choix;
     int counter=10;
 
-    char choixContinuer='n';
+    //char choixContinuer='n';
+    int choixContinuer=0;
 
-    //kant int
     char choixContinuerAjout='n';
     char choixContinuerAffichage='n';
 
@@ -723,13 +724,14 @@ int main()
             break;
         }
 
-
         //le choix de continuer
-        printf("vous voulez continuer dans le menu principale ? y/n : ");
-        scanf(" %c",&choixContinuer);
-        getchar();
+        printf("vous voulez continuer dans le menu principale ? 1/0 : ");
+        scanf(" %d",&choixContinuer);
+
+
+
     }
-    while(choixContinuer == 'y');
+    while(choixContinuer == 1);
 
     return 0;
 }
